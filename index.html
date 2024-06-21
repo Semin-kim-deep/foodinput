@@ -59,6 +59,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
+            margin-top: 20px;
         }
         .button-container button {
             background-color: #add8e6;
@@ -136,6 +137,11 @@
             <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
             <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
         </div>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-message user-message" id="user-message" style="display: none;">
+                <div class="chat-bubble user-bubble" id="user-bubble"></div>
+            </div>
+        </div>
         <div class="button-container" id="constitution-buttons" style="display: none;">
             <button onclick="showChat('금양체질')">금양체질</button>
             <button onclick="showChat('금음체질')">금음체질</button>
@@ -146,11 +152,6 @@
             <button onclick="showChat('수양체질')">수양체질</button>
             <button onclick="showChat('수음체질')">수음체질</button>
             <button onclick="showChat('내 체질 모름')">내 체질 모름</button>
-        </div>
-        <div class="chat-container" id="chat-container">
-            <div class="chat-message user-message" id="user-message" style="display: none;">
-                <div class="chat-bubble user-bubble" id="user-bubble"></div>
-            </div>
         </div>
         <div class="faq" id="faq" style="display: none;">
             <div class="buttons">
@@ -172,9 +173,9 @@
 
         function showConstitutionButtons(message) {
             document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'flex';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
+            document.getElementById('constitution-buttons').style.display = 'flex';
             document.getElementById('faq').style.display = 'block';
         }
 
