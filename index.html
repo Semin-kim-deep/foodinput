@@ -39,7 +39,7 @@
             margin-right: 10px;
         }
         .bot-profile span {
-            font-size: 2.5em; /* 이모지 크기를 150% 키움 */
+            font-size: 2.5em;
         }
         .message {
             background-color: #f1f1f1;
@@ -151,30 +151,33 @@
             <p><a href="#">자주 묻는 질문부터 스픽 뽕 뽑는 꿀팁까지 바로 보러가기 👀</a></p>
             <p>링크를 통해 스픽에 관한 모든 내용을 확인하시고, 궁금증이 해결되지 않으신다면 언제든 연락 부탁드려요. 😊</p>
             <div class="buttons">
-                <button>이전으로</button>
+                <button onclick="resetChat()">이전으로</button>
                 <button>상담종료</button>
             </div>
         </div>
     </div>
     <script>
-        // 현재 날짜를 표시하는 함수
         function displayCurrentDate() {
             const now = new Date();
             const year = now.getFullYear();
-            const month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더함
+            const month = now.getMonth() + 1;
             const day = now.getDate();
             document.getElementById('current-date').textContent = `${year}. ${month}. ${day}.`;
         }
 
-        // 페이지 로드 시 날짜 표시
         window.onload = displayCurrentDate;
 
         function showChat(message) {
             document.querySelector('.button-container').style.display = 'none';
-            document.getElementById('initial-message-container').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
             document.getElementById('faq').style.display = 'block';
+        }
+
+        function resetChat() {
+            document.querySelector('.button-container').style.display = 'flex';
+            document.getElementById('user-message').style.display = 'none';
+            document.getElementById('faq').style.display = 'none';
         }
     </script>
 </body>
