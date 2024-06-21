@@ -40,10 +40,8 @@
             justify-content: center;
             margin-right: 10px;
         }
-        .bot-profile img {
-            width: 120%;
-            height: 120%;
-            border-radius: 50%;
+        .bot-profile span {
+            font-size: 2em; /* 이모지 크기를 120% 더 키움 */
         }
         .message {
             background-color: #f1f1f1;
@@ -122,52 +120,4 @@
             cursor: pointer;
             font-size: 1em;
         }
-        .faq .buttons button:hover {
-            background-color: #d4d4d4;
-        }
-    </style>
-</head>
-<body>
-    <div class="title-bar">
-        <h1>Food Input</h1>
-    </div>
-    <div class="container">
-        <p class="date">2024. 6. 20.</p>
-        <div class="message-container" id="initial-message-container">
-            <div class="bot-profile">
-              <span class="Emoji_emoji__6sYSR __variable_c30de8 Emoji_emoji-large__iiCJx !bg-transparent transform active:scale-75 transition-transform" data-src>🧐</span>
-            </div>
-            <div class="message">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
-        </div>
-        <div class="button-container">
-            <button onclick="showChat('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
-            <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
-            <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
-            <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
-        </div>
-        <div class="chat-container" id="chat-container">
-            <div class="chat-message user-message" id="user-message" style="display: none;">
-                <div class="chat-bubble user-bubble" id="user-bubble"></div>
-            </div>
-        </div>
-        <div class="faq" id="faq" style="display: none;">
-            <p>사용자분들께서 자주 묻는 질문부터 뽕 뽑는 꿀팁까지 정리해보았어요.</p>
-            <p><a href="#">자주 묻는 질문부터 스픽 뽕 뽑는 꿀팁까지 바로 보러가기 👀</a></p>
-            <p>링크를 통해 스픽에 관한 모든 내용을 확인하시고, 궁금증이 해결되지 않으신다면 언제든 연락 부탁드려요. 😊</p>
-            <div class="buttons">
-                <button>이전으로</button>
-                <button>상담종료</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        function showChat(message) {
-            document.querySelector('.button-container').style.display = 'none';
-            document.getElementById('initial-message-container').style.display = 'none';
-            document.getElementById('user-message').style.display = 'flex';
-            document.getElementById('user-bubble').innerText = message;
-            document.getElementById('faq').style.display = 'block';
-        }
-    </script>
-</body>
-</html>
+        .faq .buttons button
