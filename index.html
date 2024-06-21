@@ -98,17 +98,6 @@
             text-align: center;
             margin-top: 20px;
         }
-        .faq p {
-            font-size: 1em;
-            margin: 5px 0;
-        }
-        .faq a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .faq a:hover {
-            text-decoration: underline;
-        }
         .faq .buttons {
             display: flex;
             justify-content: center;
@@ -141,11 +130,22 @@
             </div>
             <div class="message">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
         </div>
-        <div class="button-container">
-            <button onclick="showChat('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
+        <div class="button-container" id="main-buttons">
+            <button onclick="showConstitutionButtons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
             <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
             <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
             <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
+        </div>
+        <div class="button-container" id="constitution-buttons" style="display: none;">
+            <button onclick="showChat('금양체질')">금양체질</button>
+            <button onclick="showChat('금음체질')">금음체질</button>
+            <button onclick="showChat('목양체질')">목양체질</button>
+            <button onclick="showChat('목음체질')">목음체질</button>
+            <button onclick="showChat('토양체질')">토양체질</button>
+            <button onclick="showChat('토음체질')">토음체질</button>
+            <button onclick="showChat('수양체질')">수양체질</button>
+            <button onclick="showChat('수음체질')">수음체질</button>
+            <button onclick="showChat('내 체질 모름')">내 체질 모름</button>
         </div>
         <div class="chat-container" id="chat-container">
             <div class="chat-message user-message" id="user-message" style="display: none;">
@@ -153,9 +153,6 @@
             </div>
         </div>
         <div class="faq" id="faq" style="display: none;">
-            <p>사용자분들께서 자주 묻는 질문부터 뽕 뽑는 꿀팁까지 정리해보았어요.</p>
-            <p><a href="#">자주 묻는 질문부터 스픽 뽕 뽑는 꿀팁까지 바로 보러가기 👀</a></p>
-            <p>링크를 통해 스픽에 관한 모든 내용을 확인하시고, 궁금증이 해결되지 않으신다면 언제든 연락 부탁드려요. 😊</p>
             <div class="buttons">
                 <button onclick="resetChat()">이전으로</button>
                 <button>상담종료</button>
@@ -173,15 +170,25 @@
 
         window.onload = displayCurrentDate;
 
+        function showConstitutionButtons(message) {
+            document.getElementById('main-buttons').style.display = 'none';
+            document.getElementById('constitution-buttons').style.display = 'flex';
+            document.getElementById('user-message').style.display = 'flex';
+            document.getElementById('user-bubble').innerText = message;
+            document.getElementById('faq').style.display = 'block';
+        }
+
         function showChat(message) {
-            document.querySelector('.button-container').style.display = 'none';
+            document.getElementById('main-buttons').style.display = 'none';
+            document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
             document.getElementById('faq').style.display = 'block';
         }
 
         function resetChat() {
-            document.querySelector('.button-container').style.display = 'flex';
+            document.getElementById('main-buttons').style.display = 'flex';
+            document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
         }
