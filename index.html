@@ -33,8 +33,6 @@
         .bot-profile {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background-color: #ff0000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -130,7 +128,7 @@
         <h1>Food Input</h1>
     </div>
     <div class="container">
-        <p class="date">2024. 6. 20.</p>
+        <p class="date" id="current-date"></p>
         <div class="message-container" id="initial-message-container">
             <div class="bot-profile">
               <span>🧐</span>
@@ -159,6 +157,18 @@
         </div>
     </div>
     <script>
+        // 현재 날짜를 표시하는 함수
+        function displayCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더함
+            const day = now.getDate();
+            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}.`;
+        }
+
+        // 페이지 로드 시 날짜 표시
+        window.onload = displayCurrentDate;
+
         function showChat(message) {
             document.querySelector('.button-container').style.display = 'none';
             document.getElementById('initial-message-container').style.display = 'none';
