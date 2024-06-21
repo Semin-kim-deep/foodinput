@@ -141,6 +141,12 @@
             <div class="chat-message user-message" id="user-message" style="display: none;">
                 <div class="chat-bubble user-bubble" id="user-bubble"></div>
             </div>
+            <div class="chat-message bot-message" id="bot-message" style="display: none;">
+                <div class="bot-profile">
+                    <span>🧐</span>
+                </div>
+                <div class="chat-bubble" id="bot-bubble"></div>
+            </div>
         </div>
         <div class="button-container" id="constitution-buttons" style="display: none;">
             <button onclick="showChat('금양체질')">금양체질</button>
@@ -151,7 +157,7 @@
             <button onclick="showChat('토음체질')">토음체질</button>
             <button onclick="showChat('수양체질')">수양체질</button>
             <button onclick="showChat('수음체질')">수음체질</button>
-            <button onclick="showChat('내 체질 모름')">내 체질 모름</button>
+            <button onclick="showUnknownConstitution()">내 체질 모름</button>
         </div>
         <div class="faq" id="faq" style="display: none;">
             <div class="buttons">
@@ -187,10 +193,21 @@
             document.getElementById('faq').style.display = 'block';
         }
 
+        function showUnknownConstitution() {
+            document.getElementById('main-buttons').style.display = 'none';
+            document.getElementById('constitution-buttons').style.display = 'none';
+            document.getElementById('user-message').style.display = 'flex';
+            document.getElementById('user-bubble').innerText = '내 체질 모름';
+            document.getElementById('bot-message').style.display = 'flex';
+            document.getElementById('bot-bubble').innerText = '니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다 안다면 재미없지 바람이 불어오면 부는 대로 비 오면 비에 젖어 사는 거지 그런 거지 그런 거지. 으흐흐 어허허 🎵';
+            document.getElementById('faq').style.display = 'block';
+        }
+
         function resetChat() {
             document.getElementById('main-buttons').style.display = 'flex';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'none';
+            document.getElementById('bot-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
         }
     </script>
