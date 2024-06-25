@@ -16,6 +16,10 @@
             padding: 15px;
             text-align: center;
         }
+        .subtitle {
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
         .container {
             padding: 20px;
             text-align: center;
@@ -26,8 +30,8 @@
         }
         .message-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
+            justify-content: flex-start;
             margin-bottom: 20px;
         }
         .bot-profile {
@@ -48,6 +52,7 @@
             font-size: 1.1em;
             display: inline-block;
             max-width: 80%;
+            text-align: left;
         }
         .button-container {
             display: flex;
@@ -126,6 +131,7 @@
 <body>
     <div class="title-bar">
         <h1>Food Input</h1>
+        <div class="subtitle">당신의 위장에 때려넣을(input) 음식을 골라드립니다.</div>
     </div>
     <div class="container">
         <p class="date" id="current-date"></p>
@@ -159,11 +165,10 @@
     <script>
         function displayCurrentDate() {
             const now = new Date();
-            const year = now.getFullYear().toString().slice(2);
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][now.getDay()];
-            document.getElementById('current-date').textContent = `${year}.${month}.${day} (${dayOfWeek})`;
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}.`;
         }
 
         window.onload = displayCurrentDate;
