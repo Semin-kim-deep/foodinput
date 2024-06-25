@@ -16,10 +16,6 @@
             padding: 15px;
             text-align: center;
         }
-        .subtitle {
-            font-size: 0.8em;
-            margin-top: 5px;
-        }
         .container {
             padding: 20px;
             text-align: center;
@@ -30,8 +26,8 @@
         }
         .message-container {
             display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 20px;
         }
         .bot-profile {
@@ -52,14 +48,12 @@
             font-size: 1.1em;
             display: inline-block;
             max-width: 80%;
-            text-align: left;
         }
         .button-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            margin-top: 20px;
         }
         .button-container button {
             background-color: #add8e6;
@@ -99,6 +93,17 @@
             text-align: center;
             margin-top: 20px;
         }
+        .faq p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .faq a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .faq a:hover {
+            text-decoration: underline;
+        }
         .faq .buttons {
             display: flex;
             justify-content: center;
@@ -121,7 +126,6 @@
 <body>
     <div class="title-bar">
         <h1>Food Input</h1>
-        <div class="subtitle">당신의 위장에 때려넣을(input) 음식을 골라드립니다.</div>
     </div>
     <div class="container">
         <p class="date" id="current-date"></p>
@@ -131,8 +135,8 @@
             </div>
             <div class="message">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
         </div>
-        <div class="button-container" id="main-buttons">
-            <button onclick="showConstitutionButtons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
+        <div class="button-container">
+            <button onclick="showChat('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
             <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
             <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
             <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
@@ -141,25 +145,11 @@
             <div class="chat-message user-message" id="user-message" style="display: none;">
                 <div class="chat-bubble user-bubble" id="user-bubble"></div>
             </div>
-            <div class="chat-message bot-message" id="bot-message" style="display: none;">
-                <div class="bot-profile">
-                    <span>🧐</span>
-                </div>
-                <div class="chat-bubble" id="bot-bubble"></div>
-            </div>
-        </div>
-        <div class="button-container" id="constitution-buttons" style="display: none;">
-            <button onclick="showChat('금양체질')">금양체질</button>
-            <button onclick="showChat('금음체질')">금음체질</button>
-            <button onclick="showChat('목양체질')">목양체질</button>
-            <button onclick="showChat('목음체질')">목음체질</button>
-            <button onclick="showChat('토양체질')">토양체질</button>
-            <button onclick="showChat('토음체질')">토음체질</button>
-            <button onclick="showChat('수양체질')">수양체질</button>
-            <button onclick="showChat('수음체질')">수음체질</button>
-            <button onclick="showUnknownConstitution()">내 체질 모름</button>
         </div>
         <div class="faq" id="faq" style="display: none;">
+            <p>사용자분들께서 자주 묻는 질문부터 뽕 뽑는 꿀팁까지 정리해보았어요.</p>
+            <p><a href="#">자주 묻는 질문부터 스픽 뽕 뽑는 꿀팁까지 바로 보러가기 👀</a></p>
+            <p>링크를 통해 스픽에 관한 모든 내용을 확인하시고, 궁금증이 해결되지 않으신다면 언제든 연락 부탁드려요. 😊</p>
             <div class="buttons">
                 <button onclick="resetChat()">이전으로</button>
                 <button>상담종료</button>
@@ -169,45 +159,25 @@
     <script>
         function displayCurrentDate() {
             const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}.`;
+            const year = now.getFullYear().toString().slice(2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][now.getDay()];
+            document.getElementById('current-date').textContent = `${year}.${month}.${day} (${dayOfWeek})`;
         }
 
         window.onload = displayCurrentDate;
 
-        function showConstitutionButtons(message) {
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('user-message').style.display = 'flex';
-            document.getElementById('user-bubble').innerText = message;
-            document.getElementById('constitution-buttons').style.display = 'flex';
-            document.getElementById('faq').style.display = 'block';
-        }
-
         function showChat(message) {
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'none';
+            document.querySelector('.button-container').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
-            document.getElementById('faq').style.display = 'block';
-        }
-
-        function showUnknownConstitution() {
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'none';
-            document.getElementById('user-message').style.display = 'flex';
-            document.getElementById('user-bubble').innerText = '내 체질 모름';
-            document.getElementById('bot-message').style.display = 'flex';
-            document.getElementById('bot-bubble').innerText = '니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다 안다면 재미없지 바람이 불어오면 부는 대로 비 오면 비에 젖어 사는 거지 그런 거지 그런 거지. 으흐흐 어허허 🎵';
             document.getElementById('faq').style.display = 'block';
         }
 
         function resetChat() {
-            document.getElementById('main-buttons').style.display = 'flex';
-            document.getElementById('constitution-buttons').style.display = 'none';
+            document.querySelector('.button-container').style.display = 'flex';
             document.getElementById('user-message').style.display = 'none';
-            document.getElementById('bot-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
         }
     </script>
