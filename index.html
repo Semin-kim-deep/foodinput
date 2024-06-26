@@ -150,7 +150,7 @@
             </div>
         </div>
         <div class="button-container" id="constitution-buttons" style="display: none;">
-            <button onclick="showChat('금양체질')">금양체질</button>
+            <button onclick="showGoldYangConstitution()">금양체질</button>
             <button onclick="showChat('금음체질')">금음체질</button>
             <button onclick="showChat('목양체질')">목양체질</button>
             <button onclick="showChat('목음체질')">목음체질</button>
@@ -166,6 +166,11 @@
                 <button id="exit-button">이상한 애라서<br>황급히 앱을 종료</button>
                 <button id="end-chat-button" style="display: none;">상담종료</button>
             </div>
+        </div>
+        <div class="button-container" id="gold-yang-buttons" style="display: none;">
+            <button onclick="goBack()">이전으로</button>
+            <button onclick="exitApp()">바다로 떠난다(앱 종료)</button>
+            <button onclick="showRecommendation()">해당 식재료 음식으로 추천받는다</button>
         </div>
     </div>
     <script>
@@ -221,19 +226,24 @@
             document.getElementById('end-chat-button').style.display = 'none';
         }
 
+        function showGoldYangConstitution() {
+            previousState = currentState;
+            currentState = 'gold-yang';
+            document.getElementById('constitution-buttons').style.display = 'none';
+            document.getElementById('bot-message').style.display = 'flex';
+            document.getElementById('bot-bubble').innerHTML = '🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.';
+            document.getElementById('gold-yang-buttons').style.display = 'flex';
+            document.getElementById('faq').style.display = 'none';
+        }
+
         function goBack() {
             switch(currentState) {
                 case 'constitution':
                     resetChat();
                     break;
                 case 'chat':
-                    if (previousState === 'constitution') {
-                        showConstitutionButtons('내 8체질에 맞는 메뉴고르기');
-                    } else {
-                        resetChat();
-                    }
-                    break;
                 case 'unknown':
+                case 'gold-yang':
                     showConstitutionButtons('내 8체질에 맞는 메뉴고르기');
                     break;
                 default:
@@ -249,6 +259,17 @@
             document.getElementById('user-message').style.display = 'none';
             document.getElementById('bot-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
+            document.getElementById('gold-yang-buttons').style.display = 'none';
+        }
+
+        function exitApp() {
+            alert('앱을 종료합니다. 바다에서 즐거운 시간 보내세요!');
+            window.close();
+        }
+
+        function showRecommendation() {
+            alert('조개, 게, 문어 요리를 추천해드리겠습니다.');
+            // 여기에 추천 로직을 추가할 수 있습니다.
         }
     </script>
 </body>
