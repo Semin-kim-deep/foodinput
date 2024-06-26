@@ -169,7 +169,8 @@
         </div>
     </div>
     <script>
-        let isConstitutionButtonsShown = false;
+        let currentState = 'main';
+        let previousState = '';
 
         function displayCurrentDate() {
             const now = new Date();
@@ -183,6 +184,8 @@
         window.onload = displayCurrentDate;
 
         function showConstitutionButtons(message) {
+            previousState = currentState;
+            currentState = 'constitution';
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
@@ -190,10 +193,11 @@
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
-            isConstitutionButtonsShown = true;
         }
 
         function showChat(message) {
+            previousState = currentState;
+            currentState = 'chat';
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
@@ -204,6 +208,8 @@
         }
 
         function showUnknownConstitution() {
+            previousState = currentState;
+            currentState = 'unknown';
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
@@ -216,25 +222,33 @@
         }
 
         function goBack() {
-            if (isConstitutionButtonsShown) {
-                document.getElementById('main-buttons').style.display = 'flex';
-                document.getElementById('constitution-buttons').style.display = 'none';
-                document.getElementById('user-message').style.display = 'none';
-                document.getElementById('bot-message').style.display = 'none';
-                document.getElementById('faq').style.display = 'none';
-                isConstitutionButtonsShown = false;
-            } else {
-                resetChat();
+            switch(currentState) {
+                case 'constitution':
+                    resetChat();
+                    break;
+                case 'chat':
+                    if (previousState === 'constitution') {
+                        showConstitutionButtons('내 8체질에 맞는 메뉴고르기');
+                    } else {
+                        resetChat();
+                    }
+                    break;
+                case 'unknown':
+                    showConstitutionButtons('내 8체질에 맞는 메뉴고르기');
+                    break;
+                default:
+                    resetChat();
             }
         }
 
         function resetChat() {
+            currentState = 'main';
+            previousState = '';
             document.getElementById('main-buttons').style.display = 'flex';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'none';
             document.getElementById('bot-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
-            isConstitutionButtonsShown = false;
         }
     </script>
 </body>
