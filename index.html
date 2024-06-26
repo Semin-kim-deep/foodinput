@@ -169,6 +169,8 @@
         </div>
     </div>
     <script>
+        let isConstitutionButtonsShown = false;
+
         function displayCurrentDate() {
             const now = new Date();
             const year = now.getFullYear();
@@ -179,8 +181,6 @@
         }
 
         window.onload = displayCurrentDate;
-
-        let isConstitutionButtonsShown = false;
 
         function showConstitutionButtons(message) {
             document.getElementById('main-buttons').style.display = 'none';
@@ -209,7 +209,7 @@
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = '내 체질 모름';
             document.getElementById('bot-message').style.display = 'flex';
-            document.getElementById('bot-bubble').innerText = '니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다 안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵';
+            document.getElementById('bot-bubble').innerText = '니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'inline-block';
             document.getElementById('end-chat-button').style.display = 'none';
@@ -217,12 +217,12 @@
 
         function goBack() {
             if (isConstitutionButtonsShown) {
-                document.getElementById('constitution-buttons').style.display = 'flex';
+                document.getElementById('main-buttons').style.display = 'flex';
+                document.getElementById('constitution-buttons').style.display = 'none';
                 document.getElementById('user-message').style.display = 'none';
                 document.getElementById('bot-message').style.display = 'none';
-                document.getElementById('faq').style.display = 'block';
-                document.getElementById('exit-button').style.display = 'none';
-                document.getElementById('end-chat-button').style.display = 'inline-block';
+                document.getElementById('faq').style.display = 'none';
+                isConstitutionButtonsShown = false;
             } else {
                 resetChat();
             }
