@@ -26,7 +26,7 @@
         }
         .date {
             margin: 20px 0;
-            font-size: 1.2em;
+            font-size: 0.72em;
         }
         .message-container {
             display: flex;
@@ -172,7 +172,10 @@
             const year = now.getFullYear();
             const month = now.getMonth() + 1;
             const day = now.getDate();
-            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}.`;
+            const dayOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][now.getDay()];
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-date').textContent = `${hours}:${minutes} ${dayOfWeek}, ${year}. ${month}. ${day}.`;
         }
 
         window.onload = displayCurrentDate;
