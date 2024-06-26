@@ -268,8 +268,16 @@
         }
 
         function showRecommendation() {
-            alert('조개, 게, 문어 요리를 추천해드리겠습니다.');
-            // 여기에 추천 로직을 추가할 수 있습니다.
+            const recommendations = [
+                '버거킹: 문어버거',
+                '서브웨이: 조개 샌드위치',
+                '김밥천국: 게살 김밥',
+                '한솥: 문어 덮밥'
+            ];
+            document.getElementById('bot-message').style.display = 'flex';
+            document.getElementById('bot-bubble').innerHTML = '🧐 추천 메뉴:<br>' + recommendations.join('<br>');
+            document.getElementById('gold-yang-buttons').style.display = 'none';
+            document.getElementById('faq').style.display = 'block';
         }
     </script>
 </body>
