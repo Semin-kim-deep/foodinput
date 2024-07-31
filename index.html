@@ -138,11 +138,11 @@
     <div class="container">
         <p class="date" id="current-date"></p>
         <div class="history-container" id="history-container"></div>
-        <div class="message-container" id="initial-message-container" style="display: none;">
+        <div class="message-container" id="initial-message-container">
             <div class="bot-profile">
               <span>🧐</span>
             </div>
-            <div class="message"></div>
+            <div class="message">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
         </div>
         <div class="button-container" id="main-buttons">
             <button onclick="showConstitutionButtons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
@@ -197,14 +197,6 @@
             }
         }
 
-        function showInitialMessage() {
-            const messageContainer = document.getElementById('initial-message-container');
-            messageContainer.style.display = 'flex';
-            const messageElement = messageContainer.querySelector('.message');
-            messageElement.innerHTML = '';
-            typeMessage(messageElement, "아래의 도움이 필요하신 내용을 선택해주세요. 😊");
-        }
-
         function displayCurrentDate() {
             const now = new Date();
             const year = now.getFullYear();
@@ -254,7 +246,7 @@
             document.getElementById('bot-message').style.display = 'flex';
             const botBubble = document.getElementById('bot-bubble');
             botBubble.innerHTML = '';
-            typeMessage(botBubble, "죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다.");
+            typeMessage(botBubble, "죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
         }
 
         function showUnknownConstitution() {
@@ -317,11 +309,11 @@
             document.getElementById('bot-message').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'none';
-            showInitialMessage();
+            document.getElementById('initial-message-container').style.display = 'flex';
         }
 
         function exitApp() {
-            alert('앱을 종료합니다. 바다에서 즐거운 시간 보내세요!');
+            alert('앱을 종료합니다. 바다에서 즐거운 시간 보내세요! 🌊');
             window.close();
         }
 
@@ -342,4 +334,7 @@
 
         window.onload = function() {
             displayCurrentDate();
-            showInitialMessage
+        };
+    </script>
+</body>
+</html>
