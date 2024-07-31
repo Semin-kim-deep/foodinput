@@ -117,6 +117,17 @@
         .faq .buttons button:hover {
             background-color: #d4d4d4;
         }
+        .history-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .history-item {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -126,6 +137,7 @@
     </div>
     <div class="container">
         <p class="date" id="current-date"></p>
+        <div class="history-container" id="history-container"></div>
         <div class="message-container" id="initial-message-container" style="display: none;">
             <div class="bot-profile">
               <span>🧐</span>
@@ -176,6 +188,7 @@
     <script>
         let currentState = 'main';
         let previousState = '';
+        let history = [];
 
         function typeMessage(element, message, index = 0) {
             if (index < message.length) {
@@ -201,9 +214,22 @@
             document.getElementById('current-date').textContent = `${year}. ${month}. ${day}. ${dayOfWeek}`;
         }
 
+        function updateHistory(message) {
+            history.push(message);
+            const historyContainer = document.getElementById('history-container');
+            historyContainer.innerHTML = '';
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.textContent = item;
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
         function showConstitutionButtons(message) {
             previousState = currentState;
             currentState = 'constitution';
+            updateHistory(message);
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
             document.getElementById('user-bubble').innerText = message;
@@ -216,6 +242,7 @@
         function showChat(message) {
             previousState = currentState;
             currentState = 'chat';
+            updateHistory(message);
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
@@ -224,7 +251,6 @@
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
 
-            // 봇 메시지 표시
             document.getElementById('bot-message').style.display = 'flex';
             const botBubble = document.getElementById('bot-bubble');
             botBubble.innerHTML = '';
@@ -234,6 +260,7 @@
         function showUnknownConstitution() {
             previousState = currentState;
             currentState = 'unknown';
+            updateHistory('내 체질 모름');
             document.getElementById('main-buttons').style.display = 'none';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'flex';
@@ -250,6 +277,7 @@
         function showGoldYangConstitution() {
             previousState = currentState;
             currentState = 'gold-yang';
+            updateHistory('금양체질');
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('bot-message').style.display = 'flex';
             const botBubble = document.getElementById('bot-bubble');
@@ -260,6 +288,10 @@
         }
 
         function goBack() {
+            if (history.length > 0) {
+                history.pop();
+                updateHistory('');
+            }
             switch(currentState) {
                 case 'constitution':
                     resetChat();
@@ -277,6 +309,8 @@
         function resetChat() {
             currentState = 'main';
             previousState = '';
+            history = [];
+            updateHistory('');
             document.getElementById('main-buttons').style.display = 'flex';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'none';
@@ -308,8 +342,4 @@
 
         window.onload = function() {
             displayCurrentDate();
-            showInitialMessage();
-        };
-    </script>
-</body>
-</html>
+            showInitialMessage
