@@ -1,230 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Input</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .title-bar {
-            background-color: #ff0000;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        .subtitle {
-            font-size: 0.8em;
-            margin-top: 5px;
-        }
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-        .date {
-            margin: 20px 0;
-            font-size: 0.95em;
-        }
-        .message-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-        .bot-profile {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        .bot-profile span {
-            font-size: 2.5em;
-        }
-        .message {
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            display: inline-block;
-            max-width: 80%;
-            text-align: left;
-        }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .button-container button {
-            background-color: #add8e6;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .button-container button:hover {
-            background-color: #87ceeb;
-        }
-        .chat-container {
-            text-align: left;
-            margin-top: 20px;
-        }
-        .chat-container .chat-message {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        .chat-container .chat-message.user-message {
-            justify-content: flex-end;
-        }
-        .chat-container .chat-bubble {
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            padding: 10px 15px;
-            font-size: 1em;
-            max-width: 70%;
-        }
-        .chat-container .chat-bubble.user-bubble {
-            background-color: #007BFF;
-            color: white;
-        }
-        .faq {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-        }
-        .faq .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .faq .buttons button {
-            background-color: #e6e6e6;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .faq .buttons button:hover {
-            background-color: #d4d4d4;
-        }
-    </style>
+    <!-- 기존 head 내용 유지 -->
 </head>
 <body>
-    <div class="title-bar">
-        <h1>Food Input</h1>
-        <div class="subtitle">당신의 위장에 때려넣을(input) 음식을 골라드립니다.</div>
-    </div>
-    <div class="container">
-        <p class="date" id="current-date"></p>
-        <div class="chat-container" id="chat-container">
-            <div class="chat-message bot-message" id="bot-message">
-                <div class="bot-profile">
-                    <span>🧐</span>
-                </div>
-                <div class="chat-bubble" id="bot-bubble">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
-            </div>
-        </div>
-        <div class="button-container" id="depth1-buttons">
-            <button onclick="showDepth2Buttons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
-            <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
-            <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
-            <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
-        </div>
-        <div class="button-container" id="depth2-buttons" style="display: none;">
-            <button onclick="showGoldYangConstitution()">금양체질</button>
-            <button onclick="showChat('금음체질')">금음체질</button>
-            <button onclick="showChat('목양체질')">목양체질</button>
-            <button onclick="showChat('목음체질')">목음체질</button>
-            <button onclick="showChat('토양체질')">토양체질</button>
-            <button onclick="showChat('토음체질')">토음체질</button>
-            <button onclick="showChat('수양체질')">수양체질</button>
-            <button onclick="showChat('수음체질')">수음체질</button>
-            <button onclick="showUnknownConstitution()">내 체질 모름</button>
-        </div>
-        <div class="faq" id="faq" style="display: none;">
-            <div class="buttons">
-                <button onclick="goBack()">이전으로</button>
-                <button id="exit-button">이상한 애라서<br>황급히 앱을 종료</button>
-                <button id="end-chat-button" style="display: none;">상담종료</button>
-            </div>
-        </div>
-        <div class="button-container" id="gold-yang-buttons" style="display: none;">
-            <button onclick="goBack()">이전으로</button>
-            <button onclick="exitApp()">바다로 떠난다(앱 종료)</button>
-            <button onclick="showRecommendation()">해당 식재료 음식으로 추천받는다</button>
-        </div>
-    </div>
+    <!-- 기존 body 내용 유지 -->
     <script>
         let currentDepth = 0;
         let previousState = '';
 
         function displayCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            const dayOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][now.getDay()];
-            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}. ${dayOfWeek}`;
+            // 기존 함수 내용 유지
         }
 
-        function addUserMessage(message) {
+        function addMessage(message, isUser = false) {
             const chatContainer = document.getElementById('chat-container');
-            const userMessage = document.createElement('div');
-            userMessage.className = 'chat-message user-message';
-            userMessage.innerHTML = `<div class="chat-bubble user-bubble">${message}</div>`;
-            chatContainer.appendChild(userMessage);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            if (!isUser) {
+                messageDiv.innerHTML = `
+                    <div class="bot-profile">
+                        <span>🧐</span>
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML += `<div class="chat-bubble ${isUser ? 'user-bubble' : ''}">${message}</div>`;
+            chatContainer.appendChild(messageDiv);
         }
 
         function showDepth2Buttons(message) {
             currentDepth = 2;
-            addUserMessage(message);
+            addMessage(message, true);
+            addMessage("당신의 체질을 선택해주세요.");
             document.getElementById('depth1-buttons').style.display = 'none';
             document.getElementById('depth2-buttons').style.display = 'flex';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
-            document.getElementById('bot-bubble').innerText = "당신의 체질을 선택해주세요.";
         }
 
         function showChat(message) {
             currentDepth = 2;
-            addUserMessage(message);
+            addMessage(message, true);
             document.getElementById('depth1-buttons').style.display = 'none';
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
-            document.getElementById('bot-bubble').innerText = "죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊";
+            addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
         }
 
         function showUnknownConstitution() {
             currentDepth = 2;
-            addUserMessage('내 체질 모름');
+            addMessage('내 체질 모름', true);
             document.getElementById('depth1-buttons').style.display = 'none';
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'inline-block';
             document.getElementById('end-chat-button').style.display = 'none';
-            document.getElementById('bot-bubble').innerText = "니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵";
+            addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
         }
 
         function showGoldYangConstitution() {
             currentDepth = 3;
-            addUserMessage('금양체질');
+            addMessage('금양체질', true);
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'flex';
             document.getElementById('faq').style.display = 'none';
-            document.getElementById('bot-bubble').innerHTML = '🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.';
+            addMessage('🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.');
         }
 
         function goBack() {
@@ -237,7 +82,7 @@
                     document.getElementById('depth1-buttons').style.display = 'flex';
                     document.getElementById('depth2-buttons').style.display = 'none';
                     document.getElementById('gold-yang-buttons').style.display = 'none';
-                    document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
+                    addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
                     break;
                 case 2:
                     showDepth2Buttons('내 8체질에 맞는 메뉴고르기');
@@ -253,15 +98,8 @@
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'none';
-            document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
-            document.getElementById('chat-container').innerHTML = `
-                <div class="chat-message bot-message" id="bot-message">
-                    <div class="bot-profile">
-                        <span>🧐</span>
-                    </div>
-                    <div class="chat-bubble" id="bot-bubble">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
-                </div>
-            `;
+            document.getElementById('chat-container').innerHTML = '';
+            addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
         }
 
         function exitApp() {
@@ -279,11 +117,12 @@
             ];
             document.getElementById('gold-yang-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
-            document.getElementById('bot-bubble').innerHTML = '🧐 추천 메뉴:<br>' + recommendations.join('<br>');
+            addMessage('🧐 추천 메뉴:<br>' + recommendations.join('<br>'));
         }
 
         window.onload = function() {
             displayCurrentDate();
+            addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
         };
     </script>
 </body>
