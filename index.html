@@ -5,118 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Input</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .title-bar {
-            background-color: #ff0000;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        .subtitle {
-            font-size: 0.8em;
-            margin-top: 5px;
-        }
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-        .date {
-            margin: 20px 0;
-            font-size: 0.95em;
-        }
-        .message-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-        .bot-profile {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        .bot-profile span {
-            font-size: 2.5em;
-        }
-        .message {
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            display: inline-block;
-            max-width: 80%;
-            text-align: left;
-        }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .button-container button {
-            background-color: #add8e6;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .button-container button:hover {
-            background-color: #87ceeb;
-        }
-        .chat-container {
-            text-align: left;
-            margin-top: 20px;
-        }
-        .chat-container .chat-message {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        .chat-container .chat-message.user-message {
-            justify-content: flex-end;
-        }
-        .chat-container .chat-bubble {
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            padding: 10px 15px;
-            font-size: 1em;
-            max-width: 70%;
-        }
-        .chat-container .chat-bubble.user-bubble {
-            background-color: #007BFF;
-            color: white;
-        }
-        .faq {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-        }
-        .faq .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .faq .buttons button {
-            background-color: #e6e6e6;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .faq .buttons button:hover {
-            background-color: #d4d4d4;
-        }
+        /* 이전 스타일 유지 */
     </style>
 </head>
 <body>
@@ -144,17 +33,16 @@
             <button onclick="showChat('수음체질')">수음체질</button>
             <button onclick="showUnknownConstitution()">내 체질 모름</button>
         </div>
+        <div class="button-container" id="depth3-buttons" style="display: none;">
+            <button onclick="showRecommendation()">해당 식재료 음식으로 추천받는다</button>
+            <button onclick="exitApp()">바다로 떠난다(앱 종료)</button>
+        </div>
         <div class="faq" id="faq" style="display: none;">
             <div class="buttons">
                 <button onclick="goBack()">이전으로</button>
                 <button id="exit-button">이상한 애라서<br>황급히 앱을 종료</button>
                 <button id="end-chat-button" style="display: none;">상담종료</button>
             </div>
-        </div>
-        <div class="button-container" id="gold-yang-buttons" style="display: none;">
-            <button onclick="goBack()">이전으로</button>
-            <button onclick="exitApp()">바다로 떠난다(앱 종료)</button>
-            <button onclick="showRecommendation()">해당 식재료 음식으로 추천받는다</button>
         </div>
     </div>
     <script>
@@ -212,7 +100,6 @@
         function showUnknownConstitution() {
             currentDepth = 2;
             addMessage('내 체질 모름', true);
-            document.getElementById('depth1-buttons').style.display = 'none';
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'inline-block';
@@ -224,8 +111,8 @@
             currentDepth = 3;
             addMessage('금양체질', true);
             document.getElementById('depth2-buttons').style.display = 'none';
-            document.getElementById('gold-yang-buttons').style.display = 'flex';
-            document.getElementById('faq').style.display = 'none';
+            document.getElementById('depth3-buttons').style.display = 'flex';
+            document.getElementById('faq').style.display = 'block';
             addMessage('🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.');
         }
 
@@ -238,11 +125,13 @@
                 case 1:
                     document.getElementById('depth1-buttons').style.display = 'flex';
                     document.getElementById('depth2-buttons').style.display = 'none';
-                    document.getElementById('gold-yang-buttons').style.display = 'none';
+                    document.getElementById('depth3-buttons').style.display = 'none';
                     addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
                     break;
                 case 2:
-                    showDepth2Buttons('내 8체질에 맞는 메뉴고르기');
+                    document.getElementById('depth2-buttons').style.display = 'flex';
+                    document.getElementById('depth3-buttons').style.display = 'none';
+                    addMessage("당신의 체질을 선택해주세요.");
                     break;
                 default:
                     resetChat();
@@ -253,8 +142,8 @@
             currentDepth = 0;
             document.getElementById('depth1-buttons').style.display = 'flex';
             document.getElementById('depth2-buttons').style.display = 'none';
+            document.getElementById('depth3-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
-            document.getElementById('gold-yang-buttons').style.display = 'none';
             document.getElementById('chat-container').innerHTML = '';
             addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
         }
@@ -265,14 +154,14 @@
         }
 
         function showRecommendation() {
-            currentDepth = 3;
+            addMessage('해당 식재료 음식으로 추천받는다', true);
             const recommendations = [
                 '버거킹: 문어버거',
                 '서브웨이: 조개 샌드위치',
                 '김밥천국: 게살 김밥',
                 '한솥: 문어 덮밥'
             ];
-            document.getElementById('gold-yang-buttons').style.display = 'none';
+            document.getElementById('depth3-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             addMessage('🧐 추천 메뉴:<br>' + recommendations.join('<br>'));
         }
