@@ -134,13 +134,13 @@
                 <div class="chat-bubble" id="bot-bubble">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
             </div>
         </div>
-        <div class="button-container" id="main-buttons">
-            <button onclick="showConstitutionButtons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
+        <div class="button-container" id="depth1-buttons">
+            <button onclick="showDepth2Buttons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
             <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
             <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
             <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
         </div>
-        <div class="button-container" id="constitution-buttons" style="display: none;">
+        <div class="button-container" id="depth2-buttons" style="display: none;">
             <button onclick="showGoldYangConstitution()">금양체질</button>
             <button onclick="showChat('금음체질')">금음체질</button>
             <button onclick="showChat('목양체질')">목양체질</button>
@@ -165,7 +165,7 @@
         </div>
     </div>
     <script>
-        let currentState = 'main';
+        let currentDepth = 0;
         let previousState = '';
 
         function displayCurrentDate() {
@@ -185,24 +185,22 @@
             chatContainer.appendChild(userMessage);
         }
 
-        function showConstitutionButtons(message) {
-            previousState = currentState;
-            currentState = 'constitution';
+        function showDepth2Buttons(message) {
+            currentDepth = 2;
             addUserMessage(message);
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'flex';
+            document.getElementById('depth1-buttons').style.display = 'none';
+            document.getElementById('depth2-buttons').style.display = 'flex';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
-            document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
+            document.getElementById('bot-bubble').innerText = "당신의 체질을 선택해주세요.";
         }
 
         function showChat(message) {
-            previousState = currentState;
-            currentState = 'chat';
+            currentDepth = 2;
             addUserMessage(message);
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'none';
+            document.getElementById('depth1-buttons').style.display = 'none';
+            document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
@@ -210,11 +208,10 @@
         }
 
         function showUnknownConstitution() {
-            previousState = currentState;
-            currentState = 'unknown';
+            currentDepth = 2;
             addUserMessage('내 체질 모름');
-            document.getElementById('main-buttons').style.display = 'none';
-            document.getElementById('constitution-buttons').style.display = 'none';
+            document.getElementById('depth1-buttons').style.display = 'none';
+            document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'inline-block';
             document.getElementById('end-chat-button').style.display = 'none';
@@ -222,24 +219,28 @@
         }
 
         function showGoldYangConstitution() {
-            previousState = currentState;
-            currentState = 'gold-yang';
+            currentDepth = 3;
             addUserMessage('금양체질');
-            document.getElementById('constitution-buttons').style.display = 'none';
+            document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'flex';
             document.getElementById('faq').style.display = 'none';
             document.getElementById('bot-bubble').innerHTML = '🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.';
         }
 
         function goBack() {
-            switch(currentState) {
-                case 'constitution':
+            currentDepth--;
+            switch(currentDepth) {
+                case 0:
                     resetChat();
                     break;
-                case 'chat':
-                case 'unknown':
-                case 'gold-yang':
-                    showConstitutionButtons('내 8체질에 맞는 메뉴고르기');
+                case 1:
+                    document.getElementById('depth1-buttons').style.display = 'flex';
+                    document.getElementById('depth2-buttons').style.display = 'none';
+                    document.getElementById('gold-yang-buttons').style.display = 'none';
+                    document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
+                    break;
+                case 2:
+                    showDepth2Buttons('내 8체질에 맞는 메뉴고르기');
                     break;
                 default:
                     resetChat();
@@ -247,10 +248,9 @@
         }
 
         function resetChat() {
-            currentState = 'main';
-            previousState = '';
-            document.getElementById('main-buttons').style.display = 'flex';
-            document.getElementById('constitution-buttons').style.display = 'none';
+            currentDepth = 0;
+            document.getElementById('depth1-buttons').style.display = 'flex';
+            document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'none';
             document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
@@ -270,6 +270,7 @@
         }
 
         function showRecommendation() {
+            currentDepth = 3;
             const recommendations = [
                 '버거킹: 문어버거',
                 '서브웨이: 조개 샌드위치',
