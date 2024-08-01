@@ -138,28 +138,22 @@
     <div class="container">
         <p class="date" id="current-date"></p>
         <div class="history-container" id="history-container"></div>
-        <div class="message-container" id="initial-message-container">
-            <div class="bot-profile">
-              <span>🧐</span>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-message user-message" id="user-message" style="display: none;">
+                <div class="chat-bubble user-bubble" id="user-bubble"></div>
             </div>
-            <div class="message">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
+            <div class="chat-message bot-message" id="bot-message">
+                <div class="bot-profile">
+                    <span>🧐</span>
+                </div>
+                <div class="chat-bubble" id="bot-bubble">아래의 도움이 필요하신 내용을 선택해주세요. 😊</div>
+            </div>
         </div>
         <div class="button-container" id="main-buttons">
             <button onclick="showConstitutionButtons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
             <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
             <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
             <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
-        </div>
-        <div class="chat-container" id="chat-container">
-            <div class="chat-message user-message" id="user-message" style="display: none;">
-                <div class="chat-bubble user-bubble" id="user-bubble"></div>
-            </div>
-            <div class="chat-message bot-message" id="bot-message" style="display: none;">
-                <div class="bot-profile">
-                    <span>🧐</span>
-                </div>
-                <div class="chat-bubble" id="bot-bubble"></div>
-            </div>
         </div>
         <div class="button-container" id="constitution-buttons" style="display: none;">
             <button onclick="showGoldYangConstitution()">금양체질</button>
@@ -229,6 +223,8 @@
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
             document.getElementById('end-chat-button').style.display = 'inline-block';
+            document.getElementById('bot-message').style.display = 'flex';
+            document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
         }
 
         function showChat(message) {
@@ -306,10 +302,10 @@
             document.getElementById('main-buttons').style.display = 'flex';
             document.getElementById('constitution-buttons').style.display = 'none';
             document.getElementById('user-message').style.display = 'none';
-            document.getElementById('bot-message').style.display = 'none';
+            document.getElementById('bot-message').style.display = 'flex';
+            document.getElementById('bot-bubble').innerText = "아래의 도움이 필요하신 내용을 선택해주세요. 😊";
             document.getElementById('faq').style.display = 'none';
             document.getElementById('gold-yang-buttons').style.display = 'none';
-            document.getElementById('initial-message-container').style.display = 'flex';
         }
 
         function exitApp() {
