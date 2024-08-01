@@ -158,153 +158,117 @@
         </div>
     </div>
     <script>
-        let currentDepth = 0;
-        let previousDepth = 0;
-        let chatHistory = [];
+      let currentDepth = 0;
+let previousDepth = 0;
+let chatHistory = [];
 
-        function displayCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            const dayOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][now.getDay()];
-            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}. ${dayOfWeek}`;
-        }
+function addMessage(message, isUser = false) {
+    const chatContainer = document.getElementById('chat-container');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+    
+    if (!isUser) {
+        messageDiv.innerHTML = `
+            <div class="bot-profile">
+                <span>🧐</span>
+            </div>
+        `;
+    }
+    
+    messageDiv.innerHTML += `<div class="chat-bubble ${isUser ? 'user-bubble' : ''}">${message}</div>`;
+    chatContainer.appendChild(messageDiv);
+    chatHistory.push({message, isUser});
+}
 
-        function addMessage(message, isUser = false) {
-            const chatContainer = document.getElementById('chat-container');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
-            
-            if (!isUser) {
-                messageDiv.innerHTML = `
-                    <div class="bot-profile">
-                        <span>🧐</span>
-                    </div>
-                `;
-            }
-            
-            messageDiv.innerHTML += `<div class="chat-bubble ${isUser ? 'user-bubble' : ''}">${message}</div>`;
-            chatContainer.appendChild(messageDiv);
-            chatHistory.push({message, isUser});
-        }
+function showDepth2Buttons(message) {
+    previousDepth = currentDepth;
+    currentDepth = 2;
+    addMessage(message, true);
+    addMessage("당신의 체질을 선택해주세요.");
+    updateButtonDisplay();
+}
 
-        function showDepth2Buttons(message) {
-            previousDepth = currentDepth;
-            currentDepth = 2;
-            addMessage(message, true);
-            addMessage("당신의 체질을 선택해주세요.");
-            document.getElementById('depth1-buttons').style.display = 'none';
+function showChat(message) {
+    previousDepth = currentDepth;
+    currentDepth = 2;
+    addMessage(message, true);
+    updateButtonDisplay();
+    addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
+}
+
+function showUnknownConstitution() {
+    previousDepth = currentDepth;
+    currentDepth = 2;
+    addMessage('내 체질 모름', true);
+    updateButtonDisplay();
+    addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
+}
+
+function showGoldYangConstitution() {
+    previousDepth = currentDepth;
+    currentDepth = 3;
+    addMessage('금양체질', true);
+    updateButtonDisplay();
+    addMessage('🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.');
+}
+
+function goBack() {
+    if (currentDepth > 0) {
+        addMessage('이전으로', true);
+        currentDepth = previousDepth;
+        updateButtonDisplay();
+    }
+}
+
+function updateButtonDisplay() {
+    document.getElementById('depth1-buttons').style.display = 'none';
+    document.getElementById('depth2-buttons').style.display = 'none';
+    document.getElementById('depth3-buttons').style.display = 'none';
+    document.getElementById('faq').style.display = 'block';
+
+    switch(currentDepth) {
+        case 0:
+            document.getElementById('depth1-buttons').style.display = 'flex';
+            document.getElementById('faq').style.display = 'none';
+            break;
+        case 1:
+            document.getElementById('depth1-buttons').style.display = 'flex';
+            break;
+        case 2:
             document.getElementById('depth2-buttons').style.display = 'flex';
-            document.getElementById('faq').style.display = 'block';
-            document.getElementById('exit-button').style.display = 'none';
-            document.getElementById('end-chat-button').style.display = 'inline-block';
-        }
-
-        function showChat(message) {
-            previousDepth = currentDepth;
-            currentDepth = 2;
-            addMessage(message, true);
-            document.getElementById('depth1-buttons').style.display = 'none';
-            document.getElementById('depth2-buttons').style.display = 'none';
-            document.getElementById('faq').style.display = 'block';
-            document.getElementById('exit-button').style.display = 'none';
-            document.getElementById('end-chat-button').style.display = 'inline-block';
-            addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
-        }
-
-        function showUnknownConstitution() {
-            previousDepth = currentDepth;
-            currentDepth = 2;
-            addMessage('내 체질 모름', true);
-            document.getElementById('depth2-buttons').style.display = 'none';
-            document.getElementById('faq').style.display = 'block';
-            document.getElementById('exit-button').style.display = 'inline-block';
-            document.getElementById('end-chat-button').style.display = 'none';
-            addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
-        }
-
-        function showGoldYangConstitution() {
-            previousDepth = currentDepth;
-            currentDepth = 3;
-            addMessage('금양체질', true);
-            document.getElementById('depth2-buttons').style.display = 'none';
+            break;
+        case 3:
             document.getElementById('depth3-buttons').style.display = 'flex';
-            document.getElementById('faq').style.display = 'block';
-            addMessage('🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.');
-        }
+            break;
+    }
+}
 
-        function goBack() {
-            if (currentDepth > 0) {
-                currentDepth = previousDepth;
-                chatHistory.pop(); // 마지막 사용자 메시지 제거
-                chatHistory.pop(); // 마지막 봇 메시지 제거
-                updateChatDisplay();
-                updateButtonDisplay();
-            }
-        }
+function resetChat() {
+    currentDepth = 0;
+    previousDepth = 0;
+    chatHistory = [];
+    document.getElementById('chat-container').innerHTML = '';
+    updateButtonDisplay();
+    addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
+}
 
-        function updateChatDisplay() {
-            const chatContainer = document.getElementById('chat-container');
-            chatContainer.innerHTML = '';
-            chatHistory.forEach(chat => addMessage(chat.message, chat.isUser));
-        }
+function showRecommendation() {
+    previousDepth = currentDepth;
+    addMessage('해당 식재료 음식으로 추천받는다', true);
+    const recommendations = [
+        '버거킹: 문어버거',
+        '서브웨이: 조개 샌드위치',
+        '김밥천국: 게살 김밥',
+        '한솥: 문어 덮밥'
+    ];
+    updateButtonDisplay();
+    addMessage('🧐 추천 메뉴:<br>' + recommendations.join('<br>'));
+}
 
-        function updateButtonDisplay() {
-            document.getElementById('depth1-buttons').style.display = 'none';
-            document.getElementById('depth2-buttons').style.display = 'none';
-            document.getElementById('depth3-buttons').style.display = 'none';
-            document.getElementById('faq').style.display = 'block';
-
-            switch(currentDepth) {
-                case 0:
-                    document.getElementById('depth1-buttons').style.display = 'flex';
-                    document.getElementById('faq').style.display = 'none';
-                    break;
-                case 1:
-                    document.getElementById('depth1-buttons').style.display = 'flex';
-                    break;
-                case 2:
-                    document.getElementById('depth2-buttons').style.display = 'flex';
-                    break;
-                case 3:
-                    document.getElementById('depth3-buttons').style.display = 'flex';
-                    break;
-            }
-        }
-
-        function resetChat() {
-            currentDepth = 0;
-            previousDepth = 0;
-            chatHistory = [];
-            document.getElementById('chat-container').innerHTML = '';
-            updateButtonDisplay();
-            addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
-        }
-
-        function exitApp() {
-            alert('앱을 종료합니다. 바다에서 즐거운 시간 보내세요! 🌊');
-            window.close();
-        }
-
-        function showRecommendation() {
-            previousDepth = currentDepth;
-            addMessage('해당 식재료 음식으로 추천받는다', true);
-            const recommendations = [
-                '버거킹: 문어버거',
-                '서브웨이: 조개 샌드위치',
-                '김밥천국: 게살 김밥',
-                '한솥: 문어 덮밥'
-            ];
-            document.getElementById('depth3-buttons').style.display = 'none';
-            document.getElementById('faq').style.display = 'block';
-            addMessage('🧐 추천 메뉴:<br>' + recommendations.join('<br>'));
-        }
-
-        window.onload = function() {
-            displayCurrentDate();
-            resetChat();
-        };
+window.onload = function() {
+    displayCurrentDate();
+    resetChat();
+};
     </script>
 </body>
 </html>
