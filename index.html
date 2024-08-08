@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Input</title>
- <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -198,14 +198,14 @@
 
         function showChat(message) {
             addMessage(message, true);
-            updateButtonDisplay();
             addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
         }
 
         function showUnknownConstitution() {
             addMessage('내 체질 모름', true);
-            document.getElementById('exit-button').style.display = 'inline-block';
             addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
+            document.getElementById('depth2-buttons').style.display = 'none';
+            document.getElementById('exit-button').style.display = 'inline-block';
         }
 
         function showGoldYangConstitution() {
@@ -218,8 +218,15 @@
 
         function goBack() {
             addMessage('이전으로', true);
-            currentDepth = previousDepth;
-            updateButtonDisplay();
+            if (document.getElementById('exit-button').style.display === 'inline-block') {
+                // 내 체질 모름에서 이전으로 가는 경우
+                document.getElementById('exit-button').style.display = 'none';
+                addMessage("당신의 체질을 선택해주세요.");
+                document.getElementById('depth2-buttons').style.display = 'flex';
+            } else {
+                currentDepth = previousDepth;
+                updateButtonDisplay();
+            }
         }
 
         function updateButtonDisplay() {
