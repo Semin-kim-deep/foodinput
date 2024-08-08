@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Input</title>
-   <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -118,6 +118,7 @@
             background-color: #d4d4d4;
         }
     </style>
+
 </head>
 <body>
     <div class="title-bar">
@@ -152,7 +153,6 @@
             <div class="buttons">
                 <button onclick="goBack()">이전으로</button>
                 <button id="exit-button" style="display: none;">이상한 애라서<br>황급히 앱을 종료</button>
-                <button id="end-chat-button" style="display: none;">상담종료</button>
             </div>
         </div>
     </div>
@@ -234,20 +234,9 @@
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
 
-            switch(currentDepth) {
-                case 0:
-                    document.getElementById('depth1-buttons').style.display = 'flex';
-                    document.getElementById('faq').style.display = 'none';
-                    break;
-                case 1:
-                    document.getElementById('depth1-buttons').style.display = 'flex';
-                    break;
-                case 2:
-                    document.getElementById('depth2-buttons').style.display = 'flex';
-                    break;
-                case 3:
-                    document.getElementById('depth3-buttons').style.display = 'flex';
-                    break;
+            if (currentDepth === 0) {
+                document.getElementById('depth1-buttons').style.display = 'flex';
+                document.getElementById('faq').style.display = 'none';
             }
         }
 
