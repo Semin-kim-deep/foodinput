@@ -121,7 +121,41 @@
 
 </head>
 <body>
-    <!-- 기존 HTML 구조 유지 -->
+    <div class="title-bar">
+        <h1>Food Input</h1>
+        <div class="subtitle">당신의 위장에 때려넣을(input) 음식을 골라드립니다.</div>
+    </div>
+    <div class="container">
+        <p class="date" id="current-date"></p>
+        <div class="chat-container" id="chat-container"></div>
+        <div class="button-container" id="depth1-buttons">
+            <button onclick="showDepth2Buttons('내 8체질에 맞는 메뉴고르기')">내 8체질에 맞는 메뉴고르기</button>
+            <button onclick="showChat('어제 안 먹은 재료 위주로')">어제 안 먹은 재료 위주로</button>
+            <button onclick="showChat('맛으로 선택하기')">맛으로 선택하기</button>
+            <button onclick="showChat('신제품 메뉴 확인하기')">신제품 메뉴 확인하기</button>
+        </div>
+        <div class="button-container" id="depth2-buttons" style="display: none;">
+            <button onclick="showGoldYangConstitution()">금양체질</button>
+            <button onclick="showChat('금음체질')">금음체질</button>
+            <button onclick="showChat('목양체질')">목양체질</button>
+            <button onclick="showChat('목음체질')">목음체질</button>
+            <button onclick="showChat('토양체질')">토양체질</button>
+            <button onclick="showChat('토음체질')">토음체질</button>
+            <button onclick="showChat('수양체질')">수양체질</button>
+            <button onclick="showChat('수음체질')">수음체질</button>
+            <button onclick="showUnknownConstitution()">내 체질 모름</button>
+        </div>
+        <div class="button-container" id="depth3-buttons" style="display: none;">
+            <button onclick="showRecommendation()">해당 식재료 음식으로 추천받는다</button>
+            <button onclick="exitApp()">바다로 떠난다(앱 종료)</button>
+        </div>
+        <div class="faq" id="faq" style="display: none;">
+            <div class="buttons">
+                <button onclick="goBack()">이전으로</button>
+                <button id="exit-button" style="display: none;">이상한 애라서<br>황급히 앱을 종료</button>
+            </div>
+        </div>
+    </div>
     <script>
         let currentDepth = 0;
         let previousDepth = 0;
@@ -129,11 +163,30 @@
         let depthHistory = [];
 
         function displayCurrentDate() {
-            // 기존 코드 유지
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const dayOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][now.getDay()];
+            document.getElementById('current-date').textContent = `${year}. ${month}. ${day}. ${dayOfWeek}`;
         }
 
         function addMessage(message, isUser = false) {
-            // 기존 코드 유지
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            if (!isUser) {
+                messageDiv.innerHTML = `
+                    <div class="bot-profile">
+                        <span>🧐</span>
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML += `<div class="chat-bubble ${isUser ? 'user-bubble' : ''}">${message}</div>`;
+            chatContainer.appendChild(messageDiv);
+            chatHistory.push({message, isUser});
         }
 
         function showDepth2Buttons(message) {
