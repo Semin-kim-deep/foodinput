@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Input</title>
-    <style>
+ <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -197,18 +197,13 @@
         }
 
         function showChat(message) {
-            previousDepth = currentDepth;
-            currentDepth = 2;
             addMessage(message, true);
             updateButtonDisplay();
             addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
         }
 
         function showUnknownConstitution() {
-            previousDepth = currentDepth;
-            currentDepth = 2;
             addMessage('내 체질 모름', true);
-            updateButtonDisplay();
             document.getElementById('exit-button').style.display = 'inline-block';
             addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
         }
@@ -234,9 +229,20 @@
             document.getElementById('faq').style.display = 'block';
             document.getElementById('exit-button').style.display = 'none';
 
-            if (currentDepth === 0) {
-                document.getElementById('depth1-buttons').style.display = 'flex';
-                document.getElementById('faq').style.display = 'none';
+            switch(currentDepth) {
+                case 0:
+                    document.getElementById('depth1-buttons').style.display = 'flex';
+                    document.getElementById('faq').style.display = 'none';
+                    break;
+                case 1:
+                    document.getElementById('depth1-buttons').style.display = 'flex';
+                    break;
+                case 2:
+                    document.getElementById('depth2-buttons').style.display = 'flex';
+                    break;
+                case 3:
+                    document.getElementById('depth3-buttons').style.display = 'flex';
+                    break;
             }
         }
 
@@ -255,7 +261,6 @@
         }
 
         function showRecommendation() {
-            previousDepth = currentDepth;
             addMessage('해당 식재료 음식으로 추천받는다', true);
             const recommendations = [
                 '버거킹: 문어버거',
@@ -263,7 +268,6 @@
                 '김밥천국: 게살 김밥',
                 '한솥: 문어 덮밥'
             ];
-            updateButtonDisplay();
             addMessage('🧐 추천 메뉴:<br>' + recommendations.join('<br>'));
         }
 
