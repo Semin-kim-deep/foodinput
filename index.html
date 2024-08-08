@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Input</title>
-    <style>
+   <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -151,7 +151,7 @@
         <div class="faq" id="faq" style="display: none;">
             <div class="buttons">
                 <button onclick="goBack()">이전으로</button>
-                <button id="exit-button">이상한 애라서<br>황급히 앱을 종료</button>
+                <button id="exit-button" style="display: none;">이상한 애라서<br>황급히 앱을 종료</button>
                 <button id="end-chat-button" style="display: none;">상담종료</button>
             </div>
         </div>
@@ -160,7 +160,6 @@
         let currentDepth = 0;
         let previousDepth = 0;
         let chatHistory = [];
-        let lastButtonClicked = false;
 
         function displayCurrentDate() {
             const now = new Date();
@@ -192,7 +191,6 @@
         function showDepth2Buttons(message) {
             previousDepth = currentDepth;
             currentDepth = 2;
-            lastButtonClicked = true;
             addMessage(message, true);
             addMessage("당신의 체질을 선택해주세요.");
             updateButtonDisplay();
@@ -201,7 +199,6 @@
         function showChat(message) {
             previousDepth = currentDepth;
             currentDepth = 2;
-            lastButtonClicked = true;
             addMessage(message, true);
             updateButtonDisplay();
             addMessage("죄송합니다. 현재 이 기능은 개발 중입니다. 빠른 시일 내에 서비스하도록 하겠습니다. 😊");
@@ -210,16 +207,15 @@
         function showUnknownConstitution() {
             previousDepth = currentDepth;
             currentDepth = 2;
-            lastButtonClicked = true;
             addMessage('내 체질 모름', true);
             updateButtonDisplay();
+            document.getElementById('exit-button').style.display = 'inline-block';
             addMessage("니가 너를 모르는데 난들 너를 알겠느냐. 한치 앞도 모두 몰라 다안다면 재미없지. 바람이 부는 날엔 바람으로 비오면 비에 젖어 사는 거지. 그런거지. 으흐흐 어허허 🎵");
         }
 
         function showGoldYangConstitution() {
             previousDepth = currentDepth;
             currentDepth = 3;
-            lastButtonClicked = true;
             addMessage('금양체질', true);
             updateButtonDisplay();
             addMessage('🧐 금양체질은 육식을 하면 해로우며 고래고기가 이롭습니다.<br>고래 고기를 잡으러 바다로 가세요.<br>그게 안된다면 조개, 게, 문어 등의 식재료 음식을 드세요.');
@@ -227,13 +223,8 @@
 
         function goBack() {
             addMessage('이전으로', true);
-            if (lastButtonClicked) {
-                lastButtonClicked = false;
-                updateButtonDisplay();
-            } else {
-                currentDepth = Math.max(0, currentDepth - 1);
-                updateButtonDisplay();
-            }
+            currentDepth = previousDepth;
+            updateButtonDisplay();
         }
 
         function updateButtonDisplay() {
@@ -241,6 +232,7 @@
             document.getElementById('depth2-buttons').style.display = 'none';
             document.getElementById('depth3-buttons').style.display = 'none';
             document.getElementById('faq').style.display = 'block';
+            document.getElementById('exit-button').style.display = 'none';
 
             switch(currentDepth) {
                 case 0:
@@ -263,7 +255,6 @@
             currentDepth = 0;
             previousDepth = 0;
             chatHistory = [];
-            lastButtonClicked = false;
             document.getElementById('chat-container').innerHTML = '';
             updateButtonDisplay();
             addMessage("아래의 도움이 필요하신 내용을 선택해주세요. 😊");
@@ -276,7 +267,6 @@
 
         function showRecommendation() {
             previousDepth = currentDepth;
-            lastButtonClicked = true;
             addMessage('해당 식재료 음식으로 추천받는다', true);
             const recommendations = [
                 '버거킹: 문어버거',
